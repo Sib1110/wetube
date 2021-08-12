@@ -4,6 +4,7 @@ import {
   postJoin,
   getLogin,
   postLogin,
+  startGithubLogin,
 } from "../controllers/userController";
 import { home, search } from "../controllers/videoContoroller";
 
