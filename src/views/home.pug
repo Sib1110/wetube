@@ -1,9 +1,9 @@
 extends base.pug
 include mixins/video.pug
 
-block content
-  
-    each videoInfo in videos
-        +video(videoInfo)
-    else 
-        li Sorry nothing found.
+    block content
+    
+        each videoInfo in videos
+            +video(videoInfo)
+        else 
+            li Sorry nothing found.

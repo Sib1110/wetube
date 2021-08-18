@@ -1,6 +1,7 @@
 import User from "../models/User";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt";
+import { ConnectionCheckedInEvent } from "mongodb";
 
 export const getJoin = (req, res) => res.render("Join", { pageTitle: "Join" });
 export const postJoin = async (req, res) => {
@@ -138,8 +139,39 @@ export const logout = (req, res) => {
 export const getEdit = (req, res) => {
   return res.render("edit-profile", { pageTitle: "Edit Profile" });
 };
-export const postEdit = (req, res) => {
-  return res.render("edit-profile", { pageTitle: "Edit Profile" });
+export const postEdit = async (req, res) => {
+  const {
+    session: {
+      user: { _id },
+    },
+    body: { name, email, username, location },
+  } = req;
+
+  const userData = await User.findOne({ username });
+  const emailData = await User.findOne({ email });
+  console.log(userData, emailData);
+  if (userData !== null && userData._id !== _id) {
+    return res.status(400).render("edit-profile", {
+      errorMessage: "This username is already taken",
+    });
+  }
+  if (emailData !== null && emailData._id !== _id) {
+    return res.status(400).render("edit-profile", {
+      errorMessage: "This email is already taken.",
+    });
+  }
+  const updatedUser = await User.findByIdAndUpdate(
+    _id,
+    {
+      name,
+      email,
+      username,
+      location,
+    },
+    { new: true }
+  );
+  req.session.user = updatedUser;
+  return res.redirect("/users/edit");
 };
 
 export const see = (req, res) => res.send("see User");
