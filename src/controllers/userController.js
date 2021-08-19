@@ -142,14 +142,14 @@ export const getEdit = (req, res) => {
 export const postEdit = async (req, res) => {
   const {
     session: {
-      user: { _id },
+      user: { _id, avatarUrl },
     },
     body: { name, email, username, location },
+    file,
   } = req;
 
   const userData = await User.findOne({ username });
   const emailData = await User.findOne({ email });
-  console.log(userData, emailData);
   if (userData !== null && userData._id !== _id) {
     return res.status(400).render("edit-profile", {
       errorMessage: "This username is already taken",
@@ -163,6 +163,7 @@ export const postEdit = async (req, res) => {
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     {
+      avatarUrl: file ? file.path : avatarUrl,
       name,
       email,
       username,
