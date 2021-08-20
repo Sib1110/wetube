@@ -22,13 +22,13 @@ userRouter
   .all(protectorMiddleware)
   .get(getEdit)
   .post(avatarUpload.single("avatar"), postEdit);
-userRouter.get("/:id", see);
 userRouter
   .route("/change-password")
   .all(protectorMiddleware)
   .get(getChangePassword)
   .post(postChangePassword);
-userRouter.get("/logout", protectorMiddleware, logout);
 userRouter.get("/github/start", publicOnlyMiddeware, startGithubLogin);
 userRouter.get("/github/finish", publicOnlyMiddeware, finishGithubLogin);
+userRouter.get("/logout", protectorMiddleware, logout);
+userRouter.get("/:id", see);
 export default userRouter;
