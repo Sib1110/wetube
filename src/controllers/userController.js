@@ -1,6 +1,7 @@
 import User from "../models/User";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt";
+import Video from "../models/Video";
 import { ConnectionCheckedInEvent } from "mongodb";
 
 export const getJoin = (req, res) => res.render("Join", { pageTitle: "Join" });
@@ -211,7 +212,7 @@ export const see = async (req, res) => {
   /*누구나 볼 수 있게 해야하기때문에 session에서 id를 가져오는 것이 아니라
       DB에서 id를 가져온다.*/
   const { id } = req.params;
-  const user = await User.findById(id);
+  const user = await User.findById(id).populate("videos");
   if (!user) {
     return res.status(404).render("404", { pageTitle: "User not found" });
   }
