@@ -22,7 +22,7 @@ userRouter
   .all(protectorMiddleware)
   .get(getEdit)
   .post(avatarUpload.single("avatar"), postEdit);
-userRouter.get(":id", see);
+userRouter.get("/:id", see);
 userRouter
   .route("/change-password")
   .all(protectorMiddleware)
