@@ -30,5 +30,6 @@ userRouter
 userRouter.get("/github/start", publicOnlyMiddeware, startGithubLogin);
 userRouter.get("/github/finish", publicOnlyMiddeware, finishGithubLogin);
 userRouter.get("/logout", protectorMiddleware, logout);
+//변수로 지정하기위해서 id앞에 : 이거 붙임.
 userRouter.get("/:id", see);
 export default userRouter;
