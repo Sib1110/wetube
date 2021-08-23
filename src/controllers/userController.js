@@ -213,7 +213,13 @@ export const see = async (req, res) => {
   /*누구나 볼 수 있게 해야하기때문에 session에서 id를 가져오는 것이 아니라
       DB에서 id를 가져온다.*/
   const { id } = req.params;
-  const user = await User.findById(id).populate("videos");
+  const user = await User.findById(id).populate({
+    path: "videos",
+    populate: {
+      path: "owner",
+      model: "User",
+    },
+  });
   if (!user) {
     return res.status(404).render("404", { pageTitle: "User not found" });
   }
