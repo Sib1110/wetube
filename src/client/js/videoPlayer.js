@@ -66,7 +66,6 @@ const handleTimelineChange = (event) => {
 
 const handleFullScreen = () => {
   const fullscreen = document.fullscreenElement;
-  console.log(fullscreen);
   if (fullscreen) {
     document.exitFullscreen();
     fullScreenBtn.innerText = "Enter Full Screen";
