@@ -98,7 +98,30 @@ const handleMouseMove = () => {
 const handleMouseLeave = () => {
   controlsTimeout = setTimeout(hideContorls, 3000);
 };
+
+const handleMousePlay = () => {
+  if (video.paused) {
+    video.play();
+  } else {
+    video.pause();
+  }
+  playBtnIcon.classList = video.paused ? "fas fa-play" : "fas fa-pause";
+};
+
+const handleKeydown = (event) => {
+  if (event.code === "Space") {
+    if (video.paused) {
+      video.play();
+    } else {
+      video.pause();
+    }
+    playBtnIcon.classList = video.paused ? "fas fa-play" : "fas fa-pause";
+  }
+};
+
 playBtn.addEventListener("click", handlePlayClick);
+video.addEventListener("click", handleMousePlay);
+window.addEventListener("keydown", handleKeydown);
 
 muteBtn.addEventListener("click", handleMute);
 

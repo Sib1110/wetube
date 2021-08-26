@@ -304,6 +304,9 @@ input[type=submit],
   align-items: center;
   margin-left: 25px;
 }
+#videoContainer #videoControls #mute #muteBtnIcon {
+  padding: 0px 5px;
+}
 #videoContainer #videoControls .fullScreen {
   display: flex;
   align-items: center;
