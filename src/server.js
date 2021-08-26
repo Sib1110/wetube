@@ -30,5 +30,5 @@ app.use("/static", express.static("assets")); // URL이름은 다른것 사용�
 app.use("/", rootRouter);
 app.use("/videos", videoRouter);
 app.use("/users", userRouter);
-app.user("/api", apiRouter);
+app.use("/api", apiRouter);
 export default app;
