@@ -3,8 +3,15 @@ const audio = document.getElementById("preview");
 
 let steam;
 let recorder;
+let audioFile;
 
-const handleDownload = () => {};
+const handleDownload = () => {
+  const a = document.createElement("a");
+  a.href = audioFile;
+  a.download = "Myrecording.webm";
+  document.body.appendChild(a);
+  a.click();
+};
 
 const handleStop = () => {
   startBtn.innerText = "Download Recording";
@@ -17,10 +24,9 @@ const handleStart = () => {
   startBtn.innerText = "Stop Recording";
   startBtn.removeEventListener("click", handleStart);
   startBtn.addEventListener("click", handleStop);
-
   recorder = new MediaRecorder(stream);
   recorder.ondataavailable = (event) => {
-    const audioFile = URL.createObjectURL(event.data);
+    audioFile = URL.createObjectURL(event.data);
     audio.srcObject = null;
     audio.src = audioFile;
     audio.play();
