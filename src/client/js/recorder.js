@@ -14,19 +14,45 @@ const handleDownload = async () => {
   await ffmpeg.load();
   ffmpeg.FS("writeFile", "recording.webm", await fetchFile(audioFile));
   await ffmpeg.run("-i", "recording.webm", "ouput.mp4");
+  await ffmpeg.run(
+    "-i",
+    "recording.webm",
+    "-ss",
+    "00:00:01",
+    "-frames:v",
+    "1",
+    "thumbnail.jpg"
+  );
 
   const mp4File = ffmpeg.FS("readFile", "ouput.mp4");
+  const thumbFile = ffmpeg.FS("readFile", "thumbnail.jpg");
 
   console.log(mp4File);
   console.log(mp4File.buffer);
 
   const mp4Blob = new Blob([mp4File.buffer], { type: "audio/mp4" });
+  const thumbBlob = new Blob([thumbFile.buffer], { type: "image/jpg" });
   const mp4Url = URL.createObjectURL(mp4Blob);
+  const thumbUrl = URL.createObjectURL(thumbBlob);
   const a = document.createElement("a");
   a.href = mp4Url;
   a.download = "Myrecording.mp4";
   document.body.appendChild(a);
   a.click();
+
+  const thumbA = document.createElement("a");
+  thumbA.href = thumbUrl;
+  thumbA.download = "Mythumbnail.jpg";
+  document.body.appendChild(thumbA);
+  thumbA.click();
+  ffmpeg.FS("unlink", "recording.webm");
+  ffmpeg.FS("unlink", "output.mp4");
+  ffmpeg.FS("unlink", "thumbnail.jpg");
+
+  URL.revokeObjectURL(mp4Url);
+
+  URL.revokeObjectURL(thumbUrl);
+  URL.revokeObjectURL(videoFile);
 };
 
 const handleStop = () => {
