@@ -30,7 +30,7 @@ app.use((req, res, next) => {
   res.header("Cross-Origin-Opener-Policy", "same-origin");
   next();
 });
-app.use(flash());
+app.use(flash()); //flash가 message라는 것을 사용하게 만들어줌.
 app.use(localsMiddleware);
 app.use("/uploads", express.static("uploads")); // <-- static은 폴더를 공개해서 열어주는것. 기본적으로 폴더는 비공개상태임.
 app.use("/static", express.static("assets")); // URL이름은 다른것 사용해도 무관, assets,upload일필요없음.
