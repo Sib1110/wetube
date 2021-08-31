@@ -16,7 +16,9 @@ app.use(logger);
 
 app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views");
+// req.에서 오는 정보들을 받게 해주는 미들웨어
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); // text형식으로 보내오는 파일들을 읽게해주는 미들웨어
 app.use(
   session({
     secret: process.env.COOKIE_SECRET,
