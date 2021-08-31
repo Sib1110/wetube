@@ -109,16 +109,10 @@ const handleMousePlay = () => {
 };
 
 const handleKeydown = (event) => {
-  if (event.code === "Space") {
-    if (video.paused) {
-      video.play();
-    } else {
-      video.pause();
-    }
-    playBtnIcon.classList = video.paused ? "fas fa-play" : "fas fa-pause";
+  if (event.code === "Space" && document.activeElement.tagName != "TEXTAREA") {
+    handleMousePlay();
   }
 };
-
 const handleEnded = () => {
   const { id } = videoContainer.dataset;
   fetch(`/api/videos/${id}/view`, { method: "POST" });
