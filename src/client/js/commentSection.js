@@ -1,16 +1,20 @@
 const videoContainer = document.getElementById("videoContainer");
 const form = document.getElementById("commentForm");
 
-const addComment = (text) => {
+const addComment = (text, id) => {
   const videoComments = document.querySelector(".video__comments ul");
   const newComment = document.createElement("li");
+  newComment.dataset.id = id;
   newComment.className = "video__comment";
   const icon = document.createElement("i");
   icon.className = "fas fa-comment";
   const span = document.createElement("span");
   span.innerText = ` ${text}`;
+  const span2 = document.createElement("span");
+  span2.innerText = "❌";
   newComment.appendChild(icon);
   newComment.appendChild(span);
+  newComment.appendChild(span2);
   videoComments.prepend(newComment);
 };
 const handleSubmit = async (event) => {
@@ -21,7 +25,7 @@ const handleSubmit = async (event) => {
   if (text === "") {
     return;
   }
-  const { status } = await fetch(`/api/videos/${videoId}/comment`, {
+  const response = await fetch(`/api/videos/${videoId}/comment`, {
     //fetch는 url변경없이 request를 보내게해줌.
     method: "POST",
     //header에서 이렇게 지정해줌으로써 백엔드로 텍스트를 보내는것이아니라
@@ -30,9 +34,10 @@ const handleSubmit = async (event) => {
     body: JSON.stringify({ text }),
   }); // fetch로 부터 오는 file은 주로(?) JSON형태임
   // 매우 큰 object를 프론트엔드에서 백엔드로 보낼때 쓰는 방법.
-  textarea.value = ""; // <-- getter이면서 setter임.
-  if (status === 201) {
-    addComment(text);
+  if (response.status === 201) {
+    textarea.value = ""; // <-- getter이면서 setter임.
+    const { newCommentId } = await response.json();
+    addComment(text, newCommentId);
   }
 };
 
