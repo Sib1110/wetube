@@ -20,10 +20,10 @@ header
                         else
                             if loggedInUser.avatarUrl
                                 if loggedInUser.avatarUrl.includes("github")
-                                    img.header__avatar(src=loggedInUser.avatarUrl)
+                                    img.header__avatar(src=loggedInUser.avatarUrl, crossorigin)
                                 else
-                                    img.header__avatar(src="/" + loggedInUser.avatarUrl)
-                li 
-                    a(href="/Login") Login
-                li 
-                    a(href="/join").header__btn Join
+                                    img.header__avatar(src=loggedInUser.avatarUrl, crossorigin)
+            li 
+                a(href="/Login") Login
+            li 
+                a(href="/join").header__btn Join
