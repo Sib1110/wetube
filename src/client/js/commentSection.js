@@ -1,6 +1,6 @@
 const videoContainer = document.getElementById("videoContainer");
 const form = document.getElementById("commentForm");
-const deleteComment = document.getElementById("deleteComment");
+const deleteCommentBtn = document.getElementById("deleteComment");
 const video__comment = document.getElementById("video__comment");
 
 const addComment = (text, id) => {
@@ -56,7 +56,7 @@ const handleDelete = async (event) => {
   deleteComments(deleteBtn);
 };
 
-deleteComment.addEventListener("click", handleDelete);
+deleteCommentBtn.addEventListener("click", handleDelete);
 
 if (form) {
   form.addEventListener("submit", handleSubmit);
