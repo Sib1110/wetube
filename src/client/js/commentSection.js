@@ -47,7 +47,7 @@ const deleteComments = (deleteBtn) => {
   deleteBtn.parentNode.removeChild(deleteBtn);
 };
 
-const handleDelete = async (event) => {
+const handleDelete = async () => {
   const deleteBtn = document.getElementById("video__comment");
   const id = video__comment.dataset.id;
   await fetch(`api/videos/${id}/delete`, {
